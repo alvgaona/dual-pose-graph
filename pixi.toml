@@ -3,14 +3,13 @@ name = "dual_pose_graph"
 version = "0.1.0"
 description = "Generic dual pose-graph SLAM library (no ROS, any detection type)"
 authors = [
+  "Alvaro J. Gaona <alvgaona@gmail.com>",
   "David Perez-Saura <david.perez.saura@upm.es>",
   "Miguel Fernandez-Cortizas <miguel.fernandez.cortizas@upm.es>",
-  "Alvaro J. Gaona <alvgaona@gmail.com>",
   "Pascual Campoy <pascual.campoy@upm.es>",
 ]
-maintainers = ["Alvaro J. Gaona <alvgaona@gmail.com>"]
 channels = ["robostack-humble", "conda-forge"]
-platforms = ["osx-arm64"]
+platforms = ["osx-arm64", "linux-64", "linux-aarch64"]
 preview = ["pixi-build"]
 
 [package]

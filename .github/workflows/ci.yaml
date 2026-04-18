@@ -8,7 +8,18 @@ on:
 
 jobs:
   test:
-    runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14
+            platform: osx-arm64
+          - os: ubuntu-latest
+            platform: linux-64
+          - os: ubuntu-24.04-arm
+            platform: linux-aarch64
+    runs-on: ${{ matrix.os }}
+    name: test (${{ matrix.platform }})
     steps:
       - uses: actions/checkout@v4
 
@@ -22,7 +33,7 @@ jobs:
         run: pixi run -e test test
 
   coverage:
-    runs-on: macos-14
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
