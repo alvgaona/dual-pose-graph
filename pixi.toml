@@ -16,8 +16,9 @@ preview = ["pixi-build"]
 name = "dual_pose_graph"
 version = "0.1.0"
 
-[package.build]
-backend = { name = "pixi-build-cmake", version = "*" }
+[package.build.backend]
+name = "pixi-build-cmake"
+version = "*"
 channels = [
   "https://prefix.dev/pixi-build-backends",
   "robostack-humble",
