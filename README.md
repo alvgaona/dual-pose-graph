@@ -122,6 +122,22 @@ See `tests/test_custom_detection_extension.cpp` for a worked example.
 - Drone-specific landmark types (ArUco markers, racing gates) — subclass the
   generic types in your downstream package.
 
+## Citation
+
+If you use this library in academic work, please cite the accompanying paper:
+
+```bibtex
+@misc{perezsaura2026dualposegraphsemanticlocalization,
+      title={Dual Pose-Graph Semantic Localization for Vision-Based Autonomous Drone Racing},
+      author={David Perez-Saura and Miguel Fernandez-Cortizas and Alvaro J. Gaona and Pascual Campoy},
+      year={2026},
+      eprint={2604.15168},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2604.15168},
+}
+```
+
 ## License
 
 BSD 3-Clause. See `LICENSE`.
