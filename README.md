@@ -1,5 +1,10 @@
 # dual_pose_graph
 
+[![CI](https://github.com/alvgaona/dual-pose-graph/actions/workflows/ci.yaml/badge.svg)](https://github.com/alvgaona/dual-pose-graph/actions/workflows/ci.yaml)
+[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](LICENSE)
+[![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/std/the-standard)
+[![pixi](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json)](https://pixi.sh)
+
 Generic dual pose-graph SLAM library. Extracted from the AeroStack2
 `as2_semantic_slam` package and stripped of every ROS, drone-racing, and
 visualization dependency.
