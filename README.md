@@ -1,4 +1,4 @@
-# dual_pose_graph
+# Dual Pose Graph
 
 [![CI](https://github.com/alvgaona/dual-pose-graph/actions/workflows/ci.yaml/badge.svg)](https://github.com/alvgaona/dual-pose-graph/actions/workflows/ci.yaml)
 [![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](LICENSE)
