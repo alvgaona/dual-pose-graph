@@ -1,0 +1,77 @@
+[workspace]
+name = "dual_pose_graph"
+version = "0.1.0"
+description = "Generic dual pose-graph SLAM library (no ROS, any detection type)"
+channels = ["robostack-humble", "conda-forge"]
+platforms = ["osx-arm64"]
+preview = ["pixi-build"]
+
+[package]
+name = "dual_pose_graph"
+version = "0.1.0"
+
+[package.build]
+backend = { name = "pixi-build-cmake", version = "*" }
+channels = [
+  "https://prefix.dev/pixi-build-backends",
+  "robostack-humble",
+  "conda-forge",
+]
+
+[package.host-dependencies]
+cmake = ">=3.22"
+eigen = "*"
+fmt = "*"
+glog = "*"
+ros-humble-libg2o = "*"
+# g2o headers include ceres/internal/fixed_array.h transitively.
+ceres-solver = "*"
+
+[package.run-dependencies]
+eigen = "*"
+fmt = "*"
+glog = "*"
+ros-humble-libg2o = "*"
+ceres-solver = "*"
+
+[dependencies]
+cmake = ">=3.22"
+ninja = "*"
+cxx-compiler = "*"
+eigen = "*"
+fmt = "*"
+glog = "*"
+# g2o is only distributed via robostack; the library itself has no ROS code.
+ros-humble-libg2o = "*"
+# Required transitively because g2o headers pull in ceres::internal::FixedArray.
+ceres-solver = "*"
+
+[feature.test.dependencies]
+gtest = "*"
+
+[feature.dev.dependencies]
+clang-tools = "*"
+
+[feature.coverage.dependencies]
+gcovr = "*"
+
+[environments]
+default = { solve-group = "default" }
+test = { features = ["test"], solve-group = "default" }
+dev = { features = ["test", "dev"], solve-group = "default" }
+coverage = { features = ["test", "coverage"], solve-group = "default" }
+
+[tasks]
+clean = "rm -rf build"
+
+[feature.test.tasks]
+configure = "cmake -S . -B build -G Ninja -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+build = { cmd = "cmake --build build", depends-on = ["configure"] }
+test = { cmd = "ctest --test-dir build --output-on-failure", depends-on = ["build"] }
+example = { cmd = "./build/examples/minimal_example", depends-on = ["build"] }
+
+[feature.coverage.tasks]
+coverage-configure = "cmake -S . -B build-coverage -G Ninja -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON"
+coverage-build = { cmd = "cmake --build build-coverage", depends-on = ["coverage-configure"] }
+coverage-test = { cmd = "ctest --test-dir build-coverage --output-on-failure", depends-on = ["coverage-build"] }
+coverage = { cmd = "gcovr --root . --filter 'include/' --filter 'src/' --exclude '.*\\.pixi/.*' --exclude 'build.*' --gcov-executable 'llvm-cov gcov' --exclude-lines-by-pattern '^\\s*\\}\\s*$' --exclude-unreachable-branches --exclude-throw-branches --print-summary --html-details build-coverage/coverage.html --xml build-coverage/coverage.xml build-coverage", depends-on = ["coverage-test"] }

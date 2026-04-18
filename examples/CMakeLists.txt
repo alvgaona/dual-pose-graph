@@ -1,0 +1,2 @@
+add_executable(minimal_example minimal_example.cpp)
+target_link_libraries(minimal_example PRIVATE dual_pose_graph::dual_pose_graph)

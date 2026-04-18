@@ -1,0 +1,13 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Eigen3)
+find_dependency(fmt)
+find_dependency(glog)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
+find_dependency(G2O)
+
+include("${CMAKE_CURRENT_LIST_DIR}/dual_pose_graphTargets.cmake")
+
+check_required_components(dual_pose_graph)

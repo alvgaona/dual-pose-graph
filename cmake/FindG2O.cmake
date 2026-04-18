@@ -1,0 +1,64 @@
+INCLUDE(FindPackageHandleStandardArgs)
+
+FIND_PATH(G2O_INCLUDE_DIR g2o/core/base_vertex.h
+  $ENV{G2O_ROOT}/include
+  $ENV{G2O_ROOT}
+  $ENV{PREFIX}/include
+  $ENV{CONDA_PREFIX}/include
+  /usr/local/include
+  /usr/include
+  /opt/local/include
+  /sw/local/include
+  /sw/include
+)
+
+MACRO(FIND_G2O_LIBRARY MYLIBRARY MYLIBRARYNAME)
+  FIND_LIBRARY(${MYLIBRARY}
+    NAMES "g2o_${MYLIBRARYNAME}"
+    PATHS
+    $ENV{G2O_ROOT}/lib
+    $ENV{PREFIX}/lib
+    $ENV{CONDA_PREFIX}/lib
+    ~/Library/Frameworks
+    /Library/Frameworks
+    /usr/local/lib
+    /usr/local/lib64
+    /usr/lib
+    /usr/lib64
+    /opt/local/lib
+    /sw/local/lib
+    /sw/lib
+  )
+ENDMACRO()
+
+FIND_G2O_LIBRARY(G2O_STUFF_LIBRARY stuff)
+FIND_G2O_LIBRARY(G2O_CORE_LIBRARY core)
+
+FIND_G2O_LIBRARY(G2O_SOLVER_CHOLMOD solver_cholmod)
+FIND_G2O_LIBRARY(G2O_SOLVER_CSPARSE solver_csparse)
+FIND_G2O_LIBRARY(G2O_SOLVER_CSPARSE_EXTENSION csparse_extension)
+FIND_G2O_LIBRARY(G2O_SOLVER_DENSE solver_dense)
+FIND_G2O_LIBRARY(G2O_SOLVER_PCG solver_pcg)
+FIND_G2O_LIBRARY(G2O_SOLVER_EIGEN solver_eigen)
+
+FIND_G2O_LIBRARY(G2O_TYPES_DATA types_data)
+FIND_G2O_LIBRARY(G2O_TYPES_SLAM3D types_slam3d)
+FIND_G2O_LIBRARY(G2O_TYPES_SLAM3D_ADDONS types_slam3d_addons)
+
+SET(G2O_SOLVERS_FOUND "NO")
+IF(G2O_SOLVER_CHOLMOD OR
+    G2O_SOLVER_CSPARSE OR
+    G2O_SOLVER_DENSE OR
+    G2O_SOLVER_PCG OR
+    G2O_SOLVER_EIGEN)
+  SET(G2O_SOLVERS_FOUND "YES")
+ENDIF()
+
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(
+  G2O
+  REQUIRED_VARS
+    G2O_INCLUDE_DIR
+    G2O_STUFF_LIBRARY
+    G2O_CORE_LIBRARY
+    G2O_SOLVERS_FOUND
+)
