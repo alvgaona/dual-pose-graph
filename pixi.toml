@@ -81,4 +81,15 @@ example = { cmd = "./build/examples/minimal_example", depends-on = ["build"] }
 coverage-configure = "cmake -S . -B build-coverage -G Ninja -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON"
 coverage-build = { cmd = "cmake --build build-coverage", depends-on = ["coverage-configure"] }
 coverage-test = { cmd = "ctest --test-dir build-coverage --output-on-failure", depends-on = ["coverage-build"] }
-coverage = { cmd = "gcovr --root . --filter 'include/' --filter 'src/' --exclude '.*\\.pixi/.*' --exclude 'build.*' --gcov-executable 'llvm-cov gcov' --exclude-lines-by-pattern '^\\s*\\}\\s*$' --exclude-unreachable-branches --exclude-throw-branches --print-summary --html-details build-coverage/coverage.html --xml build-coverage/coverage.xml build-coverage", depends-on = ["coverage-test"] }
+coverage = { cmd = "gcovr --root . --filter 'include/' --filter 'src/' --exclude '.*\\.pixi/.*' --exclude 'build.*' --gcov-executable \"$GCOV_EXECUTABLE\" --exclude-lines-by-pattern '^\\s*\\}\\s*$' --exclude-unreachable-branches --exclude-throw-branches --print-summary --html-details build-coverage/coverage.html --xml build-coverage/coverage.xml build-coverage", depends-on = ["coverage-test"] }
+
+# gcov tool must match the compiler: conda ships GCC on Linux (prefixed gcov)
+# and Clang on macOS (read via llvm-cov gcov).
+[feature.coverage.target.linux-64.activation.env]
+GCOV_EXECUTABLE = "x86_64-conda-linux-gnu-gcov"
+
+[feature.coverage.target.linux-aarch64.activation.env]
+GCOV_EXECUTABLE = "aarch64-conda-linux-gnu-gcov"
+
+[feature.coverage.target.osx-arm64.activation.env]
+GCOV_EXECUTABLE = "llvm-cov gcov"
