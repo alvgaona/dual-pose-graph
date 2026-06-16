@@ -46,15 +46,26 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
           merge-multiple: true
 
+      - name: Generate release notes
+        id: git-cliff
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --latest --strip header
+
       - uses: softprops/action-gh-release@v2
         with:
           files: artifacts/*.conda
-          generate_release_notes: true
+          body: ${{ steps.git-cliff.outputs.content }}
 
   prefix-dev:
     name: prefix-dev
