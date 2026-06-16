@@ -22,7 +22,6 @@ struct OptimizerG2OParameters
   double main_graph_odometry_distance_threshold_if_detections = 0.5;
   double map_odom_security_threshold = 2.0;
   double map_odom_transform_alpha = 1.0;
-  bool odometry_is_relative = false;
   bool generate_odom_map_transform = false;
   bool calculate_odom_covariance = false;
   bool throttle_detections = true;
@@ -91,7 +90,6 @@ private:
   double temp_graph_odometry_orientation_threshold_ = 0.1;
   double main_graph_odometry_distance_threshold_if_detections_ = 0.5;
   double map_odom_security_threshold_ = 2.0;
-  bool odometry_is_relative_ = false;
   bool generate_odom_map_transform_ = false;
   bool calculate_odom_covariance_ = false;
   bool throttle_detections_ = true;

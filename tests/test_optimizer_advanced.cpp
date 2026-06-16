@@ -51,16 +51,6 @@ TEST(OptimizerAdvanced, NaNOdometryIsRejected)
   EXPECT_FALSE(optimizer.handle_new_odom(nan_odom));
 }
 
-TEST(OptimizerAdvanced, RelativeOdometryFlagIsRejected)
-{
-  OptimizerG2O optimizer;
-  auto p = base_params();
-  p.odometry_is_relative = true;
-  optimizer.set_parameters(p);
-
-  EXPECT_FALSE(optimizer.handle_new_odom(identity_odom_at(0.0)));
-}
-
 TEST(OptimizerAdvanced, CalculateOdomCovarianceBranchAccepts)
 {
   OptimizerG2O optimizer;
