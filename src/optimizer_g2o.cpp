@@ -37,11 +37,6 @@ bool OptimizerG2O::generate_odometry_info(
     return false;
   }
 
-  if (odometry_is_relative_) {
-    ERROR("RELATIVE ODOMETRY NOT IMPLEMENTED");
-    return false;
-  }
-
   _odometry_info.odom_ref = _new_odometry.odometry;
   _odometry_info.increment = _last_odometry_added.odometry.inverse() * _odometry_info.odom_ref;
 
@@ -243,7 +238,6 @@ void OptimizerG2O::set_parameters(const OptimizerG2OParameters & _params)
   main_graph_odometry_distance_threshold_if_detections_ =
     _params.main_graph_odometry_distance_threshold_if_detections;
   map_odom_security_threshold_ = _params.map_odom_security_threshold;
-  odometry_is_relative_ = _params.odometry_is_relative;
   generate_odom_map_transform_ = _params.generate_odom_map_transform;
   fixed_objects_ = _params.fixed_objects;
   initial_earth_to_map_transform_ = _params.earth_to_map_transform;
