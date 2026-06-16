@@ -5,9 +5,8 @@
 [![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/std/the-standard)
 [![pixi](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json)](https://pixi.sh)
 
-Generic dual pose-graph SLAM library. Extracted from the AeroStack2
-`as2_semantic_slam` package and stripped of every ROS, drone-racing, and
-visualization dependency.
+Generic dual pose-graph SLAM library in plain C++17, with no ROS or
+visualization dependencies and usable with any detection type.
 
 The library fuses odometry with semantic object detections by maintaining two
 pose graphs: a long-term **main** graph for state estimation and a short-lived
@@ -44,9 +43,8 @@ package. The resulting `.conda` artifact installs headers, the shared library,
 and CMake config files, so a downstream project can depend on it and use
 `find_package(dual_pose_graph CONFIG REQUIRED)`.
 
-The `libg2o` binary is pulled from the `robostack-humble` conda channel. The
-package name is ROS-prefixed for packaging reasons only — the library itself is
-plain C++ with no ROS code.
+The `libg2o` binary is pulled from the `robostack-humble` conda channel; the
+library itself is plain C++ with no ROS code.
 
 ## Using it
 
@@ -81,7 +79,7 @@ See `examples/minimal_example.cpp` for a runnable version.
 ## Extending with a custom detection kind
 
 The optimizer's temp→main merge is polymorphic: each concrete `GraphNode`
-rebuilds its own absolute-frame `ObjectDetection` via `buildAbsoluteDetection`.
+rebuilds its own absolute-frame `ObjectDetection` via `build_absolute_detection`.
 Ship your own kind without touching the library:
 
 ```cpp
@@ -113,14 +111,6 @@ See `tests/test_custom_detection_extension.cpp` for a worked example.
   `SE3ObjectNode`, `Point3DObjectNode`. Key virtual: `build_absolute_detection`.
 - **`GraphEdge`** — base for graph edges. Concrete helpers: `OdomEdge`,
   `GraphEdgeSE3`, `GraphEdgeSE3Point3D`.
-
-## What this library intentionally does NOT ship
-
-- ROS integration (subscribers, TF, message conversions) — build it on top.
-- Visualization (`visualization_msgs::Marker` or equivalent) — use public
-  getters (`get_pose()`, `get_position()`, `type_id()`) to drive any visualizer.
-- Drone-specific landmark types (ArUco markers, racing gates) — subclass the
-  generic types in your downstream package.
 
 ## Citation
 
